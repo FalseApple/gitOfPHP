@@ -30,6 +30,10 @@ $(document).ready(function() {
 	 /*
 	  * login page
 	 */
+	 $("#list_t_railway li").on("click", function(){
+		  alert($(this).text());
+
+		});
 	$('#loginCheck').click(function() {
 		var bCheck = true;
 		$('input').each(function(){

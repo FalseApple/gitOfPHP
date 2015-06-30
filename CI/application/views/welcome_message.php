@@ -6,69 +6,13 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 <head>
 <meta charset="utf-8">
 <title>Welcome to CodeIgniter</title>
-
+<link href='http://fonts.googleapis.com/css?family=Englebert|Open+Sans:400,600,700' rel='stylesheet' type='text/css' />
+<link href="jjqqry.css" rel="stylesheet" type="text/css" media="all" />
 <style type="text/css">
-::selection {
-	background-color: #E13300;
-	color: white;
-}
 
-::-moz-selection {
-	background-color: #E13300;
-	color: white;
-}
-
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
-
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
-
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
-
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
-
-#body {
-	margin: 0 15px 0 15px;
-}
-
-p.footer {
-	text-align: right;
-	font-size: 11px;
-	border-top: 1px solid #D0D0D0;
-	line-height: 32px;
-	padding: 0 10px 0 10px;
-	margin: 20px 0 0 0;
-}
-
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
+.style1 {
+	color: #330099;    
+	font-size: 20px;
 }
 </style>
 <?php
@@ -86,28 +30,74 @@ p.footer {
 			echo "<script src=\"".base_url()."assets/js/".$value."\" type=\"text/javascript\"></script>";
 		}
 	}
+	if(isset($images))
+	{
+		foreach($images as $key => $value)
+		{
+			echo "<script src=\"".base_url()."assets/images/".$value."\" type=\"text/javascript\"></script>";
+		}
+	}	
 ?>
 <script>
 var CI_URL = "<?php echo site_url();?>";
 </script>
 </head>
 <body>
-
-	<div id="container"  align=center>
-		<h1>Welcome to CodeIgniter!</h1>
-
-		<div id="body">
-
-			<form action="<?php echo site_url();?>/Login/loginResponse" method="POST" name="login" id="login" >
-				<div><label>帳 號</label>：<input type="text" name="userAccount" id ="userAccount" class="form-control" placeholder="Account" autofocus required/></div><br/> 
-				<div><label>密 碼</label>：<input type="text" name="userPass" id ="userPass" class="form-control" placeholder="Password" required/></div> <br/>
-				<button type="button" id="loginCheck" >登入</button>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-				<a href="<?php echo site_url();?>/Welcome/register">申請帳號</a>
-
-			</form>
+<div id="header" class="container">
+	<div id="logo">
+		<h1><a href="#">Employee System</a></h1>
+	</div>
+	<div id="menu">
+		<ul id="list_t_railway">
+			<li><a href="#" accesskey="1" title="">Login</a></li>
+			<li><a href="#" accesskey="2" title="">Register</a></li>
+			<li><a href="#" accesskey="3" title="">About Us</a></li>
+			<li><a href="#" accesskey="4" title="">Address</a></li>
+		</ul>
+	</div>
+</div>
+<div id="wrapper" class="container">
+	<div id="page">
+		<div id="content"> <a href="#" class="image-style"><img src="<?php echo base_url()?>assets/images/img005.jpg" width="600" height="250" alt="" /></a>
+		<marquee direction="up" width="600" height="250" scrollamount="1" scrolldelay="40"  truespeed class="style1">
+				1.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa。<br />
+				2.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br />
+				3.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br />
+				4.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br />
+		</marquee><br />
+		<a href="#" class="link-style1">Learn More</a></div>
+		<div id="sidebar">
+			<div id="sbox1">
+				<h2>Mauris vulputate</h2>
+				<ul class="list-style1">
+					<li class="first">
+						<h3>Lorem ipsum amet?</h3>
+						<p>15 minutes ago by Someone</p>
+					</li>
+					<li>
+						<h3>Consequat accumsan tempus</h3>
+						<p>3 hours ago by Someone</p>
+					</li>
+					<li>
+						<h3>Adipiscing lobortis ...</h3>
+						<p>4 hours ago by Someone</p>
+					</li>
+				</ul>
+			</div>
+			<div id="sbox2">
+				<h2>Fusce ultrices</h2>
+					<ul class="list-style2">
+						<li class="first"><a href="#">Volutpat lorem ipsum elementum</a></li>
+						<li><a href="#">Ticitudin semper nunc laoreet</a></li>
+						<li><a href="#">Sed pellentesque habitant morbi</a></li>
+						<li><a href="#">Volutpat lorem ipsum elementum</a></li>
+					</ul>
+			</div>
 		</div>
 	</div>
-
+</div>
+<div id="footer">
+	<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. Photos by <a href="http://fotogrph.com/">Fotogrph</a>.</p>
+</div>
 </body>
 </html>
