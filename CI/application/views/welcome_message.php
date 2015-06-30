@@ -71,37 +71,26 @@ p.footer {
 	box-shadow: 0 0 8px #D0D0D0;
 }
 </style>
-</head>
-  <script type="text/javascript">
-  function check1(){
-	var array = Array("user", "pass");
-	var arrays = Array("帳號", "密碼");
-	for (i=0; i < array.length; i++)
-	{	
-		if (document.getElementById('array[i]').value == ''){
-		alert(arrays[i]+"未填 值="+ document.getElementById(array[i]));
-		//自動對焦
-		document.getElementsByName('array[]')[i].focus();
-		 return false;     
+<?php
+	if(isset($css))
+	{
+		foreach($css as $key => $value)
+		{
+			echo "<link rel=\"stylesheet\" href=\"".base_url()."assets/css/".$value."\">";
 		}
- 	 }
-  }
-  function check(){
-    if (document.login.user.value==''){
-      alert('帳號未填');
-      //自動對焦
-      document.login.user.focus();
-      return false;
-    } else  if (document.login.pass.value==''){
-      alert('密碼未填');
-      //自動對焦
-      document.login.pass.focus();
-      return false;
-    } else {
-    	login.submit();
-    }
-  }
-  </script>
+	}
+	if(isset($js))
+	{
+		foreach($js as $key => $value)
+		{
+			echo "<script src=\"".base_url()."assets/js/".$value."\" type=\"text/javascript\"></script>";
+		}
+	}
+?>
+<script>
+var CI_URL = "<?php echo site_url();?>";
+</script>
+</head>
 <body>
 
 	<div id="container"  align=center>
@@ -109,10 +98,10 @@ p.footer {
 
 		<div id="body">
 
-			<form action="<?php echo site_url();?>/login" method="POST" name="login"  >
-				帳 號：<input type="text" name="user" /><br /> <br /> 
-				密 碼：<input type="text" name="pass" /><br /> <br /> 
-				<input type="button" value="登入" onClick="check()" />
+			<form action="<?php echo site_url();?>/Login/loginResponse" method="POST" name="login" id="login" >
+				<div><label>帳 號</label>：<input type="text" name="userAccount" id ="userAccount" class="form-control" placeholder="Account" autofocus required/></div><br/> 
+				<div><label>密 碼</label>：<input type="text" name="userPass" id ="userPass" class="form-control" placeholder="Password" required/></div> <br/>
+				<button type="button" id="loginCheck" >登入</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				<a href="<?php echo site_url();?>/Welcome/register">申請帳號</a>
 

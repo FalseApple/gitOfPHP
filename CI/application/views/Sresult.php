@@ -80,58 +80,14 @@ p.footer {
 		<div id="body">
 			<?php
 			switch ($mode) {
+				
 				case 1 :
-					$_result = "登入失敗";
-					if ($result == 1) {
-						$_result = "登入成功";
-					}
-					echo "<h1>" . $_result . "</h1>";
-
-					if ($_result == "登入成功") {
-						echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/user>";
-					} else {
-						echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome>";
-					}
+					echo '<h1>你無此權限!</h1>';
+					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome>";
 					break;
 				case 2 :
-					echo '<h1>新增成功，即將跳轉</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome>";
-					break;
-				case 3 :
-					echo '<h1>新增失敗!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/register>";
-					break;
-				case 4 :
-					echo '<h1>資料請填寫確實!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/register>";
-					break;
-				case 5 :
-					echo '<h1>修改成功!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/user>";
-					break;
-				case 6 :
-					echo '<h1>修改失敗!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/ReModify_Page>";
-					break;
-				case 7 :
-					echo '<h1>登出成功!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome>";
-					break;
-				case 8 :
-					echo '<h1>刪除成功!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Query_Controller/Allmodify>";
-					break;
-				case 9 :
-					echo '<h1>刪除失敗!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/ReDelete>";
-					break;
-				case 10 :
-					echo '<h1>修改失敗!</h1>';
-					echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/ReDelete>";
-					break;
-				case 11 :
 					echo '<h1>帳號重複!</h1>';
-					//echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/ReDelete>";
+					// echo "<meta http-equiv=REFRESH CONTENT=1;url=" . site_url () . "/Welcome/ReDelete>";
 					break;
 			}
 			?>

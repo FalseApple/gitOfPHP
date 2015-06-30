@@ -1,17 +1,21 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Modify_finish extends CI_Controller {
+	
+	function __construct() {
+		parent::__construct ();
+			$this->load->model ( "Login_check", "Logc", True );
+	}
+	
 	public function modify($mode) {
-		
 		$session_user = $this->session->userdata ( 'user' );
-		$le2 = 0;
 		
 		// 模式選擇
 		switch ($mode) {
 			
 			// 修改資料(一般權限用)
 			case 1 :
-				$name = $_POST ['name'];
+				$name = $_POST ['modifyName'];
 				if ($name != null) {
 					$data = array (
 							'name' => $name 
@@ -24,9 +28,9 @@ class Modify_finish extends CI_Controller {
 			
 			// 修改密碼
 			case 2 :
-				$pw = $_POST ['pass'];
-				$pw2 = $_POST ['pass2'];
-				if ($pw != null && $pw == $pw2 ) {
+				$pw = $_POST ['modifyPass'];
+				$pw2 = $_POST ['modifyPass2'];
+				if ($pw != null && $pw == $pw2) {
 					$data = array (
 							'password' => $pw 
 					);
@@ -37,60 +41,78 @@ class Modify_finish extends CI_Controller {
 			
 			// 修改資料(管理員權限用)
 			case 3 :
-				$user = $_POST ['user'];
-				$name = $_POST ['name'];
-				$pw = $_POST ['pass'];
-				$pw2 = $_POST ['pass2'];
-				$competence = $_POST ['competence'];
-				if ($user != null && $name != null && $pw != null && $pw == $pw2 && $competence != null) {
+				$session_Modifyuser = $this->session->userdata ( 'userOfmodify' )->user;
+				$account = $_POST ['MasterModifyAccount'];
+				$name = $_POST ['MasterModifyName'];
+				$pw = $_POST ['MasterModifyPass'];
+				$pw2 = $_POST ['MasterModifyPass2'];
+				$competence = $_POST ['MasterModifyCompetence'];
+				if ($account != null && $name != null && $pw != null && $pw == $pw2 && $competence != null) {
 					$data = array (
-							'user' => $user,
+							'user' => $account,
 							'name' => $name,
 							'password' => $pw,
 							'competence' => $competence 
 					);
-					$this->db->where ( 'user', $user );
+					$this->db->where ( 'user', $session_Modifyuser );
 					$this->db->update ( 'emp', $data );
 				}
-				$le2 = 1;
 				break;
 		}
 		
 		// 確認是否有修改成功
 		if ($this->db->affected_rows () > 0) {
-			$_Attach ["mode"] = 5;
-			$this->load->view ( 'Sresult', $_Attach );
+			echo json_encode ( "/UserUseing/user" );
 		} else {
-			$_Attach ["mode"] = 6;
-			if ($le2 == 1)
-				$_Attach ["mode"] = 10;
-			$this->load->view ( 'Sresult', $_Attach );
+			echo json_encode ( "false" );
 		}
 	}
 	
 	// 刪除資料(將資料庫delete )
-	public function DeleteInfo($user) {
+	public function DeleteInfo() {
+		$session_Modifyuser = $this->session->userdata ( 'userOfmodify' )->user;
 		
 		// 設為 'Y' 方便歷史查詢
 		$data = array (
 				'delete' => 'Y' 
 		);
-		$this->db->where ( 'user', $user );
+		$this->db->where ( 'user', $session_Modifyuser );
 		$this->db->update ( 'emp', $data );
-		
-		/*
-		  // 完整刪除
-		  $this->db->where('user', $user);
-		  $this->db->delete('emp');
-		 */
 		
 		// 確認是否有刪除成功
 		if ($this->db->affected_rows () > 0) {
-			$_Attach ["mode"] = 8;
-			$this->load->view ( 'Sresult', $_Attach );
+			$deletesessiondata = array (
+					'userOfmodify' 
+			);
+			$this->session->unset_userdata ( $deletesessiondata );
+			echo json_encode ( "/UserUseing/Allmodify" );
 		} else {
-			$_Attach ["mode"] = 9;
-			$this->load->view ( 'Sresult', $_Attach );
+			echo json_encode ( "false" );
 		}
+	}
+	
+	// 刪除資料(將資料庫delete )
+	public function UserDeleteInfo() {
+		$MasterModifyUser = $_POST ['MasterModifyUser'];
+		
+		$data = array (
+				'delete' => 'Y' 
+		);
+		$this->db->where ( 'user', $MasterModifyUser );
+		$this->db->update ( 'emp', $data );
+		
+		// 確認是否有刪除成功
+		if ($this->db->affected_rows () > 0) {
+			echo json_encode ( "/UserUseing/Allmodify" );
+		} else {
+			echo json_encode ( "false" );
+		}
+	}
+	public function UserModify() {
+		$MasterModifyUser = $_POST ['MasterModifyUser'];
+		$this->session->set_userdata ( 'userOfmodify', $this->Logc->getUserInfo ( $MasterModifyUser )->row () );
+		$this->session->set_userdata ( 'session_Modifyuser', $this->Logc->getUserInfo ( $MasterModifyUser )->row ()->user );
+		echo json_encode ( "/UserUseing/Personalmodify" );
+
 	}
 }

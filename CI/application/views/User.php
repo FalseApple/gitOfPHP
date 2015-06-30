@@ -82,15 +82,30 @@ p.footer {
 	border: 1px solid #D0D0D0;
 	box-shadow: 0 0 8px #D0D0D0;
 }
-
-
 </style>
 
 <?php
+if(isset($css))
+{
+	foreach($css as $key => $value)
+	{
+		echo "<link rel=\"stylesheet\" href=\"".base_url()."assets/css/".$value."\">";
+	}
+}
+if(isset($js))
+{
+	foreach($js as $key => $value)
+	{
+		echo "<script src=\"".base_url()."assets/js/".$value."\" type=\"text/javascript\"></script>";
+	}
+}
 // 載入 Session
 $session_name = $this->session->userdata ( 'name' );
 $session_competence = $this->session->userdata ( 'competence' );
 ?>
+<script>
+var CI_URL = "<?php echo site_url();?>";
+</script>
 </head>
 <body>
 
@@ -98,31 +113,21 @@ $session_competence = $this->session->userdata ( 'competence' );
 
 		<h1>Welcome to CodeIgniter!</h1>
 		<div id="body" >
-		<?php 
-			if($session_name != null)
-			{
-		?>
 			<form method="post" action="<?php echo site_url();?>/Register_finish">
 			
-					 <ins><?php echo $session_name ; ?> </ins> 你好<a href="<?php echo site_url();?>/Logout">登出</a>
+					 <ins><?php echo $session_name ; ?> </ins> 你好<a href="<?php echo site_url();?>/Logout"> 登出</a>
 					  <br /> <br /> 
 					<ol >
-						<li><span><a href="<?php echo site_url();?>/Welcome/Modify_Page/1">修改資料</a></span></li>
-						<li><span><a href="<?php echo site_url();?>/Welcome/Modify_Page/2">修改密碼</a></span></li>
+						<li><span><a href="<?php echo site_url();?>/UserUseing/Modify_Page/1">修改資料</a></span></li>
+						<li><span><a href="<?php echo site_url();?>/UserUseing/Modify_Page/2">修改密碼</a></span></li>
 						<?php 
 							if($session_competence == 99)
 							 {
 						?>
-						<li><span><a href="<?php echo site_url();?>/Query_Controller/Allmodify">帳號管理</a></span></li>
+						<li><span><a href="<?php echo site_url();?>/UserUseing/Allmodify">帳號管理</a></span></li>
 						<?php }?>
 					</ol> 
 			</form>
-			<?php 
-			} else {
-				echo '<h1>您無權限觀看此頁面!</h1>';
-     		   	echo "<meta http-equiv=REFRESH CONTENT=1;url=".site_url()."/Welcome>";
-			}
-			?>
 		</div>
 	</div>
 

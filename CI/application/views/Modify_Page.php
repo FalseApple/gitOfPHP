@@ -72,13 +72,26 @@ p.footer {
 }
 </style>
 <?php
+if (isset ( $css )) {
+	foreach ( $css as $key => $value ) {
+		echo "<link rel=\"stylesheet\" href=\"" . base_url () . "assets/css/" . $value . "\">";
+	}
+}
+if (isset ( $js )) {
+	foreach ( $js as $key => $value ) {
+		echo "<script src=\"" . base_url () . "assets/js/" . $value . "\" type=\"text/javascript\"></script>";
+	}
+}
 // 載入 Session
 $session_q = $this->session->userdata ( 'mode_q' );
 ?>
+<script>
+var CI_URL = "<?php echo site_url();?>";
+</script>
 </head>
 <body>
 
-	<div id="container"  align=center>
+	<div id="container" align=center>
 		<h1>修改資料</h1>
 
 		<div id="body">
@@ -88,19 +101,21 @@ $session_q = $this->session->userdata ( 'mode_q' );
 			 {
 			 	case 1:
 			 ?>
-			 			    名 稱：<input type="text" name="name" /> <br> <br> 
-			 			   	<input type="button" value="確定" onClick="this.form.action='<?php echo site_url();?>/Modify_finish/modify/1';this.form.submit();">  &nbsp;&nbsp;&nbsp;
+			 			    <div><label>修改名稱</label>：<input type="text"  id="modifyName" name="name"  class="form-control" placeholder="修改名稱" autofocus required/></div> <br> <br> 
+			 			    <button type="button" id = "modifyCheck">確定</button> &nbsp;&nbsp;&nbsp;
 			 <?php 
 			 				break;
 			 	case 2:
 			 ?>
-					密 碼：<input type="password" name="pass" /> <br> <br> 
-					再一次輸入密碼：<input type="password" name="pass2" /> <br><br>
-					<input type="button" value="確定" onClick="this.form.action='<?php echo site_url();?>/Modify_finish/modify/2';this.form.submit();">  &nbsp;&nbsp;&nbsp;
+					<div><label>密 碼</label>：<input type="password"  id="modifyPass" name="pass"  class="form-control" placeholder="修改密碼" autofocus required/></div> <br> <br> 
+					<div><label>再一次輸入密碼</label>：<input type="password" id="modifyPass2" name="pass2" class="form-control" placeholder="再次輸入修改密碼" required/> </div><br><br>
+					<button type="button" id = "modifyCheck">確定</button> &nbsp;&nbsp;&nbsp;
 			<?php 		 		
 			 }
 			?>
+			<input type="button" value="返回上一頁" onClick="this.form.action='<?php echo site_url();?>/UserUseing/user';this.form.submit();">  &nbsp;&nbsp;&nbsp;
 				<button type='reset'>清除</button>
+
 			</form>
 		</div>
 	</div>

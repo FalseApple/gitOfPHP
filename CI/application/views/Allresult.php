@@ -6,9 +6,6 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 <head>
 <meta charset="utf-8">
 <title>Welcome to CodeIgniter</title>
-<link rel="stylesheet" href=<?php echo base_url('assets/tablesorter/blue/style.css');?> type="text/css">
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src=<?php echo base_url('assets/tablesorter/jquery.tablesorter.js'); ?>></script> 
 <style type="text/css">
 ::selection {
 	background-color: #E13300;
@@ -81,14 +78,24 @@ p.footer {
 	border:solid 1px red;
 }
 </style>
-<script type="text/javascript">
-$(function () { 
-	$("#myTable").tablesorter( {
-		 sortList: [[0,1]],
-		 headers: {1: {sorter: false} },
-		 widgets: ['zebra']
-		} );
-})
+<?php
+	if(isset($css))
+	{
+		foreach($css as $key => $value)
+		{
+			echo "<link rel=\"stylesheet\" href=\"".base_url()."assets/css/".$value."\">";
+		}
+	}
+	if(isset($js))
+	{
+		foreach($js as $key => $value)
+		{
+			echo "<script src=\"".base_url()."assets/js/".$value."\" type=\"text/javascript\"></script>";
+		}
+	}
+?>
+<script>
+var CI_URL = "<?php echo site_url();?>";
 </script>
 </head>
 <body>
@@ -120,18 +127,15 @@ $(function () {
    					echo "<td>".$value->user."</td>";
    					echo "<td>".$value->password."</td>";
    					echo "<td>".$value->competence."</td>";
-   					echo "<td><a href=".site_url()."/Query_Controller/Personalmodify/".$value->user.">modify</a>";
-   					echo '&nbsp;&nbsp;<input type="button" value="移除" onClick=" this.form.action = '.site_url().'/Modify_finish/DeleteInfo/'.$value->user.'; this.form.submit();">';	?>
-   				
-   					<input type="button" value="移除2" onClick="this.form.action='<?php echo site_url();?>/Modify_finish/DeleteInfo/<?php echo $value->user;?>';this.form.submit();"> </td>
-   					<?php 
+   					echo '<td><button type="button" name="modifyUser" value="'.$value->user.'">修改</button>';
+   					echo '&nbsp;&nbsp;<button type="button" name="deleteUser" value="'.$value->user.'">移除</button></td>';
    					echo "</tr>";
    				}  
    			}
 			?>
 			</tbody> 
 			</table><br/><br/>
-			<a href="<?php echo site_url(); ?>/Welcome/user">返回上一頁</a><br/><br/>
+			<a href="<?php echo site_url(); ?>/UserUseing/user">返回上一頁</a><br/><br/>
 			</form>
 	</div>
 	</div>
