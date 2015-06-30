@@ -64,7 +64,10 @@ p.footer {
 	padding: 0 10px 0 10px;
 	margin: 20px 0 0 0;
 }
-
+div.cities {
+white-space:nowrap;
+float:centert;
+} 
 #container {
 	margin: 10px;
 	border: 1px solid #D0D0D0;
@@ -109,12 +112,14 @@ function check(index){
 		<div id="body">
 			<form method="post" action="<?php echo site_url();?>/Register_finish" name="register">
 			   <div><label> 名 稱</label>：<input type="text" id="regName" name="regName" class="form-control" placeholder="名稱" autofocus required /></div> <br> <br> 
-				<div><label>帳 號</label>：<input type="text" id="regAccount" name="regAccount"  class="form-control" placeholder="帳號" required/>
-				<button type="button" id="accountRegCheck" >檢查</button> </div> <br> <br> 
+				<div ><label>帳 號</label>：<input type="text" id="regAccount" name="regAccount"  class="form-control" placeholder="帳號" required/>
+				&nbsp; <font color='#FF0000'><div id="divResult" style="display:inline;"></div></font></div> <br> <br> 
 				<div><label>密 碼</label>：<input type="password" id="regPass" name="regPass"class="form-control" placeholder="密碼" required /></div> <br> <br> 
 				<div><label>再一次輸入密碼</label>：<input type="password" id="regPass2"name="regPass2" class="form-control" placeholder="再次輸入密碼" required/></div> <br><br>
 				<button type="button" id="RegisterCheck" >確定</button> &nbsp;&nbsp;&nbsp;
-				<button type='reset'>清除</button>
+				<input type="button" value="返回上一頁" onClick="this.form.action='<?php echo site_url();?>';this.form.submit();">  &nbsp;&nbsp;&nbsp;
+				<button type='reset'>清除</button><br/><br/>
+				<button type="button" id="accountRegCheck" >檢查</button>
 			</form>
 		</div>
 	</div>

@@ -13,18 +13,6 @@ class Login extends CI_Controller {
 		$pass = $_POST ['pass'];
 		
 		$S_result = $this->Logc->getLoginCheck ( $account, $pass );
-		
-		switch ($S_result) {
-			case 1 :
-				echo json_encode ( "/UserUseing/user" );
-				break;
-			case 2 :
-				echo json_encode ( "1" );
-				break;
-			case 3 :
-			default :
-				echo json_encode ( "2" );
-				break;
-		}
+		echo json_encode ( $S_result );
 	}
 }

@@ -4,65 +4,57 @@ class Modify_finish extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct ();
-			$this->load->model ( "Login_check", "Logc", True );
+		$this->load->model ( "Login_check", "Logc", True );
+		$this->load->model ( "Modify_model", "Modc", True );
 	}
-	
+
 	public function modify($mode) {
-		$session_user = $this->session->userdata ( 'user' );
+
 		
 		// 模式選擇
+		$modify_a = false;
 		switch ($mode) {
 			
 			// 修改資料(一般權限用)
 			case 1 :
-				$name = $_POST ['modifyName'];
-				if ($name != null) {
-					$data = array (
-							'name' => $name 
-					);
-					$this->db->where ( 'user', $session_user );
-					$this->db->update ( 'emp', $data );
-					$this->session->set_userdata ( 'name', $name );
+				$modifyItem = array (
+						'name' => $_POST ['modifyName']
+				);
+				if ($this->Modc->modifyUserInfo ( $modifyItem )) {
+					$this->session->set_userdata ( 'name', $modifyItem["name"] );
+					$modify_a = true;
 				}
 				break;
 			
 			// 修改密碼
 			case 2 :
-				$pw = $_POST ['modifyPass'];
-				$pw2 = $_POST ['modifyPass2'];
-				if ($pw != null && $pw == $pw2) {
-					$data = array (
-							'password' => $pw 
-					);
-					$this->db->where ( 'user', $session_user );
-					$this->db->update ( 'emp', $data );
+				$modifyItem = array (
+						'password' => $_POST ['modifyPass'] 
+				);
+				if ($this->Modc->modifyUserInfo ( $modifyItem )) {
+					$modify_a = true;
 				}
 				break;
 			
 			// 修改資料(管理員權限用)
 			case 3 :
-				$session_Modifyuser = $this->session->userdata ( 'userOfmodify' )->user;
-				$account = $_POST ['MasterModifyAccount'];
-				$name = $_POST ['MasterModifyName'];
-				$pw = $_POST ['MasterModifyPass'];
-				$pw2 = $_POST ['MasterModifyPass2'];
-				$competence = $_POST ['MasterModifyCompetence'];
-				if ($account != null && $name != null && $pw != null && $pw == $pw2 && $competence != null) {
-					$data = array (
-							'user' => $account,
-							'name' => $name,
-							'password' => $pw,
-							'competence' => $competence 
-					);
-					$this->db->where ( 'user', $session_Modifyuser );
-					$this->db->update ( 'emp', $data );
+				
+				$modifyItem = array (
+						'name' => $_POST ['MasterModifyName'],
+						'user' => $_POST ['MasterModifyAccount'],
+						'password' => $_POST ['MasterModifyPass'],
+						'competence' => $_POST ['MasterModifyCompetence'] 
+				);
+
+				if ($this->Modc->modifyOtherUserInfo ( $modifyItem )) {
+					$modify_a = true;
 				}
 				break;
 		}
 		
 		// 確認是否有修改成功
-		if ($this->db->affected_rows () > 0) {
-			echo json_encode ( "/UserUseing/user" );
+		if ($modify_a) {
+			echo json_encode ( "true" );
 		} else {
 			echo json_encode ( "false" );
 		}
@@ -80,14 +72,17 @@ class Modify_finish extends CI_Controller {
 		$this->db->update ( 'emp', $data );
 		
 		// 確認是否有刪除成功
-		if ($this->db->affected_rows () > 0) {
-			$deletesessiondata = array (
-					'userOfmodify' 
-			);
-			$this->session->unset_userdata ( $deletesessiondata );
-			echo json_encode ( "/UserUseing/Allmodify" );
-		} else {
-			echo json_encode ( "false" );
+		switch ($this->db->affected_rows () >0){
+			case 1:
+				$deletesessiondata = array (
+						'userOfmodify'
+				);
+				$this->session->unset_userdata ( $deletesessiondata );
+				echo json_encode ( "true" );
+				break;
+			default:
+				echo json_encode ( "false" );
+				break;
 		}
 	}
 	
@@ -100,19 +95,17 @@ class Modify_finish extends CI_Controller {
 		);
 		$this->db->where ( 'user', $MasterModifyUser );
 		$this->db->update ( 'emp', $data );
-		
+
 		// 確認是否有刪除成功
-		if ($this->db->affected_rows () > 0) {
-			echo json_encode ( "/UserUseing/Allmodify" );
-		} else {
-			echo json_encode ( "false" );
-		}
+		echo $this->db->affected_rows () >0? json_encode ( "true" ) : json_encode ( "false" );
 	}
+	
 	public function UserModify() {
 		$MasterModifyUser = $_POST ['MasterModifyUser'];
-		$this->session->set_userdata ( 'userOfmodify', $this->Logc->getUserInfo ( $MasterModifyUser )->row () );
-		$this->session->set_userdata ( 'session_Modifyuser', $this->Logc->getUserInfo ( $MasterModifyUser )->row ()->user );
-		echo json_encode ( "/UserUseing/Personalmodify" );
-
+		// session 修改人資料
+		$this->session->set_userdata ( 'userOfmodify', $this->Modc->getUserInfo ( $MasterModifyUser )->row () );
+		// session修改前帳號
+		$this->session->set_userdata ( 'session_Modifyuser', $this->Modc->getUserInfo ( $MasterModifyUser )->row ()->user );
+		echo json_encode ( "true" );
 	}
 }

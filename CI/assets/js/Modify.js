@@ -44,11 +44,14 @@ $(document).ready(function() {
 					DUMMY : new Date().getTime()
 				},
 				success : function(msg) {
-					if(msg == "false"){
-						alert("修改失敗!");
-						return false;
-					} else {
-						window.location.href = CI_URL +  msg;
+					switch(msg){
+						case "true":
+							alert("修改成功!");
+							window.location.href = CI_URL +   "/UserUseing/user";
+							break;
+						default:
+							alert("修改失敗!");
+							return false;
 					}
 				}, error : function(){
 					alert("網頁發生未知錯誤!");
@@ -69,11 +72,14 @@ $(document).ready(function() {
 						DUMMY : new Date().getTime()
 					},
 					success : function(msg) {
-						if(msg == "false"){
-							alert("修改失敗!");
-							return false;
-						} else {
-							window.location.href = CI_URL +  msg;
+						switch(msg){
+							case "true":
+								alert("修改成功!");
+								window.location.href = CI_URL +   "/UserUseing/user";
+								break;
+							default:
+								alert("修改失敗!");
+								return false;
 						}
 					}, error : function(){
 						alert("網頁發生未知錯誤!");
@@ -118,12 +124,14 @@ $(document).ready(function() {
 				DUMMY : new Date().getTime()
 			},
 			success : function(msg) {
-				if(msg == "false"){
-					alert("修改失敗!");
-					return false;
-				} else {
-					alert("修改成功!");
-					window.location.href = CI_URL +  msg;
+				switch(msg){
+					case "true":
+						alert("修改成功!");
+						window.location.href = CI_URL +   "/UserUseing/user";
+						break;
+					default:
+						alert("修改失敗!");
+						return false;
 				}
 			}, error : function(){
 				alert("網頁發生未知錯誤!");
@@ -144,13 +152,15 @@ $(document).ready(function() {
 					DUMMY : new Date().getTime()
 				},
 				success : function(msg) {
-					if(msg == "false"){
-						alert("刪除失敗!");
-						return false;
-					} else {
-						alert("刪除成功!");
-						window.location.href = CI_URL +  msg;
-					}
+					switch(msg){
+						case "true":
+							alert("刪除成功!");
+							window.location.href = CI_URL +   "/UserUseing/Allmodify";
+							break;
+						default:
+							alert("刪除失敗!");
+							return false;
+				}
 				}, error : function(){
 					alert("網頁發生未知錯誤!");
 					return false;

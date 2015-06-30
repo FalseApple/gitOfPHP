@@ -101,6 +101,7 @@ if(isset($js))
 }
 // 載入 Session
 $session_name = $this->session->userdata ( 'name' );
+$session_login  = $this->session->userdata ( 'logged_in' );
 $session_competence = $this->session->userdata ( 'competence' );
 ?>
 <script>

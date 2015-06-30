@@ -9,30 +9,15 @@ class Register_finish extends CI_Controller {
 	}
 	public function regAccountCheck() {
 		$regAccount = $_POST ['regAccount'];
-		
-		switch ($this->Regc->getCheckOfRegAccount ( $regAccount )) {
-			case 1 :
-				echo json_encode ( "帳號已被註冊!!" );
-				break;
-			case 2 :
-				echo json_encode ( "帳號可註冊!!" );
-				break;
-			default :
-				echo json_encode ( "發生錯誤!" );
-				break;
-		}
+		echo json_encode ( $this->Regc->getCheckOfRegAccount ( $regAccount ) );
 	}
 	
 	public function RegisterAccount() {
 		
-		// 註冊時，要檢查哪些重複
+		// 註冊時，要檢查哪些重複  前面輸入變數 後面輸出名稱
 		$check = array (
-				'user'
-		);
-		
-		// 對應上面檢查項目的中文名稱
-		$checkname = array (
-				'帳號'
+				'user','帳號',
+				'name','名稱'
 		);
 		
 		// 接收變數
@@ -42,10 +27,9 @@ class Register_finish extends CI_Controller {
 				"password" => $_POST ['regPass'],
 				"password2" => $_POST ['regPass2'] 
 		);
-		
-		for($a = 0; $a < count ( $check ); $a ++) {
+		for($a = 0; $a < count ( $check ); $a= $a + 2) {
 			if ($this->Regc->getUserOfInfoCheck ( $check [$a], $check_1 [$check [$a]] )) {
-				echo json_encode ( $checkname [$a] );
+				echo json_encode ( $check [$a+1] );
 				return false;
 			}
 		}

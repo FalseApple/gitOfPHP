@@ -53,15 +53,17 @@ $(document).ready(function() {
 				pass : $('#userPass').val(),
 				DUMMY : new Date().getTime()
 			},
-			success : function(message) {
-				if(message == "1"){
-					alert("密碼錯誤!");
-					return false;
-				} else if(message == "2"){
-					alert("無此帳號!");
-					return false;
-				} else {
-					window.location.href = CI_URL +  message;
+			success : function(model) {
+				switch(model){
+					case 1:
+						window.location.href = CI_URL + "/UserUseing/user";
+						break;
+					case 2:
+						alert("密碼錯誤!");
+						break;
+					case 3:
+						alert("無此帳號!");
+						break;
 				}
 			}, error : function(){
 				alert("網頁發生未知錯誤!");
