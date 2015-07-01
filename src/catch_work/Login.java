@@ -1,4 +1,6 @@
-package app;
+package catch_work;
+
+
 
 import gson.Data;
 import gson.Receive;
@@ -37,6 +39,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+
+
 
 
 import com.google.gson.Gson;
@@ -152,7 +157,7 @@ public class Login
 			@Override
 			public void widgetSelected(SelectionEvent e)
 			{
-				HttpGet httpGet = new HttpGet("http://10.0.1.95/shihyi/sender.php");
+				HttpGet httpGet = new HttpGet("http://localhost/MyPHP/shihyi/index.php/Api");
 				httpGet.setHeader("Accept", "application/json");
 				httpGet.setHeader("Content-type", "application/json");
 				
@@ -168,13 +173,26 @@ public class Login
 					System.out.println("CODE: " + iStatusCode);
 					if(iStatusCode == 200)
 					{
+
+						// System.out.println(sResponse);
 						Receive gsonReceive = gson.fromJson(sResponse, Receive.class);
-						System.out.println(sResponse);
 						ArrayList<Data> aryListData = gsonReceive.getData();
-						System.out.println(gsonReceive.getData());
+						// System.out.println(gsonReceive.getData());
 						for(Data data : aryListData)
 						{
-							System.out.println(data.getName());
+							System.out.println("Name: " + data.getName());
+							ArrayList<Data.family> aryListFamilies = data.getFamily();
+							
+							System.out.println("Family: ");
+							// System.out.print(aryListFamilies.get(0).getName() + " 's Phone= " + aryListFamilies.get(0).getPhone());
+							
+							for(Data.family familys : aryListFamilies)
+							{
+								System.out.print(familys.getName() + " 's Phone= ");
+								System.out.print(familys.getPhone() + ",");
+								
+							}
+							System.out.println();
 						}
 					}
 					httpGet.releaseConnection();
@@ -198,7 +216,7 @@ public class Login
 				data.setName("test1");
 				data.setPasswd("1111");
 				
-				HttpPost httpPost = new HttpPost("http://10.0.1.95/shihyi/index.php/api/receiver");
+				HttpPost httpPost = new HttpPost("http://localhost/MyPHP/shihyi/index.php/Api");
 				httpPost.setHeader("Accept", "application/json");
 				httpPost.setHeader("Content-type", "application/json");
 				// new gson

@@ -20,21 +20,19 @@ class User extends CI_Model
 	
 	function getHomework()
 	{
-		$objUsers = $this->db->get("user")->Result();
+		$objUsers = $this->db->get("users")->Result();
 		
 		foreach($objUsers as $key => $value)
 		{
-			// $this->db->select("user");
-			$this->db->where("uid", $value->no);
-			$objFamily = $this->db->get("familys");
-			
-			if($objFamily->num_rows() > 0)
+			// $this->db->select("Name");
+			$this->db->where("UserNo", $value->No);
+			$objFamily = $this->db->get("family");
+			$value->family = $objFamily->Result();
+			/*if($objFamily->num_rows() > 0)
 			{
 				$value->family = $objFamily->Result();
-			}
-			// unset($value->no);
+			}*/
 		}
-	
 		return $objUsers;
 	}
 }

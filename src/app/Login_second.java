@@ -41,7 +41,7 @@ import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
 
-public class Login
+public class Login_second
 {
 	private static CloseableHttpClient httpClient = null;
 	
@@ -126,13 +126,9 @@ public class Login
 					if(iStatusCode == 200)
 					{
 						//System.out.println(EntityUtils.toString(httpEntity, "UTF-8"));
+						// Jsoup轉換為UTF8編碼
 						Document document = Jsoup.parse(EntityUtils.toString(httpEntity, "UTF-8"));
 						
-						/*
-						document.getElementById(id)
-						document.getElementsByClass(className)
-						document.getElementsByTag("table")
-						*/
 						Element tableElement = document.getElementById("myTable");
 						Elements trElements = tableElement.getElementsByTag("tr");
 						for(Element trElement : trElements)
@@ -168,14 +164,14 @@ public class Login
 					System.out.println("CODE: " + iStatusCode);
 					if(iStatusCode == 200)
 					{
-						Receive gsonReceive = gson.fromJson(sResponse, Receive.class);
 						System.out.println(sResponse);
+						/*Receive gsonReceive = gson.fromJson(sResponse, Receive.class);
+						
 						ArrayList<Data> aryListData = gsonReceive.getData();
-						System.out.println(gsonReceive.getData());
 						for(Data data : aryListData)
 						{
 							System.out.println(data.getName());
-						}
+						}*/
 					}
 					httpGet.releaseConnection();
 				} catch (ClientProtocolException e1) {
@@ -198,7 +194,7 @@ public class Login
 				data.setName("test1");
 				data.setPasswd("1111");
 				
-				HttpPost httpPost = new HttpPost("http://10.0.1.95/shihyi/index.php/api/receiver");
+				HttpPost httpPost = new HttpPost("http://10.0.1.95/shihyi/receiver.php");
 				httpPost.setHeader("Accept", "application/json");
 				httpPost.setHeader("Content-type", "application/json");
 				// new gson
